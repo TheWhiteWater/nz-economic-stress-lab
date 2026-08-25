@@ -1,0 +1,168 @@
+{
+  "schema": "nz-economic-stress-lab.assumptions.v0.2",
+  "note": "Illustrative defaults for model mechanics. Replace with source-loaded values before using as evidence.",
+  "years": 10,
+  "mortgage_book_nzd": 400000000000,
+  "base_default_rate": 0.003,
+  "unemployment_sensitivity": 0.0025,
+  "rate_sensitivity": 0.0015,
+  "lvr_buckets": [
+    {
+      "id": "lvr_le_60",
+      "label": "LVR <= 60",
+      "starting_lvr": 0.55,
+      "exposure_share": 0.42,
+      "risk_multiplier": 0.45
+    },
+    {
+      "id": "lvr_60_70",
+      "label": "60 < LVR <= 70",
+      "starting_lvr": 0.65,
+      "exposure_share": 0.22,
+      "risk_multiplier": 0.75
+    },
+    {
+      "id": "lvr_70_80",
+      "label": "70 < LVR <= 80",
+      "starting_lvr": 0.75,
+      "exposure_share": 0.24,
+      "risk_multiplier": 1.25
+    },
+    {
+      "id": "lvr_gt_80",
+      "label": "LVR > 80",
+      "starting_lvr": 0.88,
+      "exposure_share": 0.12,
+      "risk_multiplier": 2.25
+    }
+  ],
+  "scenarios": {
+    "base": {
+      "crisis_start_year": 99,
+      "crisis_duration_years": 0,
+      "normal": {
+        "house_price_fall": 0.05,
+        "unemployment_shock_pp": 1.0,
+        "mortgage_rate_shock_pp": 0.5,
+        "forced_sale_haircut": 0.05
+      },
+      "crisis": {
+        "house_price_fall": 0.05,
+        "unemployment_shock_pp": 1.0,
+        "mortgage_rate_shock_pp": 0.5,
+        "forced_sale_haircut": 0.05
+      }
+    },
+    "severe": {
+      "crisis_start_year": 5,
+      "crisis_duration_years": 1,
+      "normal": {
+        "house_price_fall": 0.05,
+        "unemployment_shock_pp": 1.0,
+        "mortgage_rate_shock_pp": 0.5,
+        "forced_sale_haircut": 0.05
+      },
+      "crisis": {
+        "house_price_fall": 0.25,
+        "unemployment_shock_pp": 4.0,
+        "mortgage_rate_shock_pp": 2.0,
+        "forced_sale_haircut": 0.08
+      }
+    },
+    "crisis": {
+      "crisis_start_year": 5,
+      "crisis_duration_years": 2,
+      "normal": {
+        "house_price_fall": 0.05,
+        "unemployment_shock_pp": 1.0,
+        "mortgage_rate_shock_pp": 0.5,
+        "forced_sale_haircut": 0.05
+      },
+      "crisis": {
+        "house_price_fall": 0.40,
+        "unemployment_shock_pp": 8.0,
+        "mortgage_rate_shock_pp": 3.0,
+        "forced_sale_haircut": 0.12
+      }
+    }
+  },
+  "designs": {
+    "zero_start_tiered": {
+      "annual_programme_migration_rate": 0.10,
+      "bank_first_loss_rate": 0.05,
+      "insurer_funding": {
+        "starting_reserve_nzd": 0,
+        "annual_operating_cost_nzd": 8000000,
+        "reserve_yield_rate": 0.045,
+        "crown_facility_interest_rate": 0.04,
+        "surplus_repayment_share": 0.35
+      },
+      "aggregate_reinsurance": {
+        "attachment_nzd": 1000000000,
+        "limit_nzd": 3000000000,
+        "share": 0.50
+      },
+      "bucket_terms": {
+        "lvr_le_60": { "premium_rate": 0.0001, "insured_layer_rate": 0.02 },
+        "lvr_60_70": { "premium_rate": 0.0004, "insured_layer_rate": 0.04 },
+        "lvr_70_80": { "premium_rate": 0.0012, "insured_layer_rate": 0.08 },
+        "lvr_gt_80": { "premium_rate": 0.0035, "insured_layer_rate": 0.15 }
+      }
+    },
+    "crown_seed_tiered": {
+      "annual_programme_migration_rate": 0.10,
+      "bank_first_loss_rate": 0.05,
+      "insurer_funding": {
+        "starting_reserve_nzd": 5000000000,
+        "annual_operating_cost_nzd": 8000000,
+        "reserve_yield_rate": 0.045,
+        "crown_facility_interest_rate": 0.04,
+        "surplus_repayment_share": 0.35
+      },
+      "aggregate_reinsurance": {
+        "attachment_nzd": 1000000000,
+        "limit_nzd": 3000000000,
+        "share": 0.50
+      },
+      "bucket_terms": {
+        "lvr_le_60": { "premium_rate": 0.0001, "insured_layer_rate": 0.02 },
+        "lvr_60_70": { "premium_rate": 0.0004, "insured_layer_rate": 0.04 },
+        "lvr_70_80": { "premium_rate": 0.0012, "insured_layer_rate": 0.08 },
+        "lvr_gt_80": { "premium_rate": 0.0035, "insured_layer_rate": 0.15 }
+      }
+    },
+    "bank_funded_reserve": {
+      "annual_programme_migration_rate": 0.10,
+      "bank_first_loss_rate": 0.05,
+      "insurer_funding": {
+        "starting_reserve_nzd": 0,
+        "annual_operating_cost_nzd": 8000000,
+        "reserve_yield_rate": 0.045,
+        "crown_facility_interest_rate": 0.04,
+        "surplus_repayment_share": 0.35
+      },
+      "aggregate_reinsurance": {
+        "attachment_nzd": 1000000000,
+        "limit_nzd": 3000000000,
+        "share": 0.50
+      },
+      "bucket_terms": {
+        "lvr_le_60": { "premium_rate": 0.0003, "insured_layer_rate": 0.02 },
+        "lvr_60_70": { "premium_rate": 0.0007, "insured_layer_rate": 0.04 },
+        "lvr_70_80": { "premium_rate": 0.0018, "insured_layer_rate": 0.08 },
+        "lvr_gt_80": { "premium_rate": 0.0048, "insured_layer_rate": 0.15 }
+      }
+    }
+  },
+  "baselines": {
+    "current_system": {
+      "bank_loss_retention_share": 1.0,
+      "extra_bank_capital_buffer_nzd": 0
+    },
+    "higher_bank_capital": {
+      "bank_loss_retention_share": 1.0,
+      "extra_bank_capital_buffer_nzd": 8000000000
+    }
+  }
+}
+

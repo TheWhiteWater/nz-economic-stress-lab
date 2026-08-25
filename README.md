@@ -2,7 +2,14 @@
 
 An interactive scenario model for testing how mortgage losses could be divided among New Zealand lenders, a national mortgage insurer, international reinsurers, and the Crown.
 
-The current model covers 2026–2036 and allows the user to change:
+This is the canonical repository for the work. It has two layers:
+
+- `app/` — the current Next.js web interface;
+- `engine/` — the canonical Python calculation engine.
+
+The web app should become a view over the engine assumptions/results, not an independent economic model.
+
+The current web model covers 2026–2036 and allows the user to change:
 
 - mortgage-market size and programme migration;
 - insurance premium and starting capital;
@@ -16,6 +23,31 @@ It reports the annual insurance reserve, loss allocation, and any Crown liquidit
 ## Important limitation
 
 This is a scenario calculator, not an actuarial forecast. Public RBNZ, Stats NZ, and Treasury data can supply macroeconomic and aggregate banking inputs, but probability of default, loss given default, insurance attachment points, and reinsurance pricing remain assumptions until independently calibrated.
+
+## Engine contract
+
+Version `v0.2` separates two waterfalls that must not be mixed:
+
+```text
+Loan-level mortgage loss:
+collateral / borrower equity
+→ bank first-loss
+→ insured mortgage layer
+→ bank excess loss
+```
+
+```text
+Aggregate insurer funding:
+premiums
+→ reserve
+→ aggregate reinsurance recovery
+→ Crown liquidity facility as debt
+→ recapitalisation / fiscal loss
+```
+
+The core kill test is:
+
+> Under the same macro shock, what is cheaper and more resilient for New Zealand: the current system, higher bank capital requirements, or national mortgage insurance with reserve and reinsurance?
 
 ## Development
 
@@ -32,6 +64,12 @@ Production build:
 npm run build
 ```
 
+Engine tests:
+
+```bash
+npm run test:engine
+```
+
 ## Data sources planned
 
 - Reserve Bank of New Zealand statistical series
@@ -40,4 +78,7 @@ npm run build
 
 ## Status
 
-Working prototype, version 0.1.
+Working prototype.
+
+- Web interface: v0.1.
+- Python engine: v0.2 prototype with explicit loan-level and aggregate insurer waterfalls.
