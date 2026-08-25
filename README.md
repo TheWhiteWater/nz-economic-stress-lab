@@ -92,3 +92,4 @@ Working prototype.
 - Web interface: v0.1.
 - Python engine: v0.2 prototype with explicit loan-level and aggregate insurer waterfalls.
 - Browser runtime: engine-parity guarded by Python-generated golden fixtures.
+- RBNZ snapshot mode: market size and rate context can be anchored to the committed 2026-06-30 RBNZ derived snapshot.

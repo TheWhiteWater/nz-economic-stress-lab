@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "./rbnz-snapshot.css";
 
 export const metadata: Metadata = {
   title: "NZ Economic Stress Lab",

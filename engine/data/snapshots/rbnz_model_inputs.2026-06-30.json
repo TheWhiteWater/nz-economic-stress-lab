@@ -1,0 +1,45 @@
+{
+  "high_lvr_outstanding_anchor": {
+    "date": "2026-06-30",
+    "label": "Higher than 80% LVR lending / closing position",
+    "share_of_total": 0.10020076885919008,
+    "source": "C35",
+    "value_nzd": 39827000000.0,
+    "value_nzd_m": 39827.0
+  },
+  "mortgage_book_anchor": {
+    "date": "2026-06-30",
+    "label": "Total lending / closing position",
+    "series_id": "LVRP.QMF2.A",
+    "source": "C35",
+    "value_nzd": 397472000000.0,
+    "value_nzd_m": 397472.0
+  },
+  "mortgage_rate_snapshot": {
+    "date": "2026-06-30",
+    "eighteen_month": 4.82,
+    "floating": 5.53,
+    "one_year": 4.62,
+    "six_month": 4.65,
+    "source": "B30",
+    "two_year": 5.0,
+    "unit": "percent_per_annum"
+  },
+  "new_lending_lvr_flow": {
+    "caveat": "C30 is new commitments flow, not outstanding-book LVR distribution.",
+    "date": "2026-06-30",
+    "lvr_above_60_nzd_m": 6183.0,
+    "lvr_above_70_nzd_m": 4412.0,
+    "lvr_above_80_nzd_m": 1271.0,
+    "lvr_above_80_share": 0.15050325636471285,
+    "source": "C30",
+    "total_new_commitments_nzd_m": 8445.0
+  },
+  "note": "Source-loaded RBNZ snapshot. These values are inputs/candidates, not automatic replacement for calibrated model assumptions.",
+  "schema": "nz-economic-stress-lab.rbnz-derived-inputs.v0",
+  "sources": {
+    "B30": "New residential mortgage weighted/simple average interest rates",
+    "C30": "New residential mortgage lending by LVR",
+    "C35": "Residential mortgage loan reconciliation"
+  }
+}

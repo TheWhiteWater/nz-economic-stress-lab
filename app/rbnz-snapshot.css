@@ -1,0 +1,41 @@
+.sourceToggle {
+  margin: 14px 0 4px;
+  padding: 12px;
+  border: 1px solid #dde3dd;
+  background: #f8f5ec;
+}
+
+.sourceToggle button {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid var(--green);
+  background: white;
+  color: var(--green);
+  cursor: pointer;
+  font: 700 10px monospace;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+.sourceToggle button.active {
+  background: var(--green);
+  color: white;
+}
+
+.sourceToggle small {
+  display: block;
+  margin-top: 9px;
+  font: 11px/1.35 Georgia, serif;
+  color: #405148;
+}
+
+@media (min-width: 1201px) {
+  .cards {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  .cards strong {
+    font-size: clamp(22px, 2.6vw, 42px);
+  }
+}
+

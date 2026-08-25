@@ -62,6 +62,14 @@ Output:
 engine/data/derived/rbnz_model_inputs.json
 ```
 
+Committed web snapshot:
+
+```text
+engine/data/snapshots/rbnz_model_inputs.2026-06-30.json
+```
+
+The committed snapshot is small and provenance-carrying. Raw RBNZ XLSX and processed CSV files remain ignored.
+
 Current derived fields:
 
 - `mortgage_book_anchor` from C35 total lending closing position;

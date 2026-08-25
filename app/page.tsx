@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { calculateStress, initial, type Inputs } from "@/lib/economic-model";
+import { applySnapshotToInputs, calculateStress, initial, rbnzSnapshot, type Inputs } from "@/lib/economic-model";
 
 const fmt = (n: number, d = 0) =>
   new Intl.NumberFormat("en-NZ", { maximumFractionDigits: d }).format(n);
@@ -47,6 +47,8 @@ function Slider({
 export default function Home() {
   const [v, setV] = useState(initial);
   const set = (key: keyof Inputs) => (value: number) => setV((o) => ({ ...o, [key]: value }));
+  const resetPlaceholder = () => setV(initial);
+  const useRbnzSnapshot = () => setV((o) => applySnapshotToInputs(o));
   const result = useMemo(() => calculateStress(v), [v]);
   const maxBar = Math.max(...result.rows.map((r) => r.reserve), 1);
   const crisisGross = result.rows
@@ -90,7 +92,13 @@ export default function Home() {
         <aside className="panel controls">
           <div className="panelTitle">
             <span>Scenario inputs</span>
-            <button onClick={() => setV(initial)}>Reset</button>
+            <button onClick={resetPlaceholder}>Reset</button>
+          </div>
+          <div className="sourceToggle">
+            <button className={v.sourceMode === "rbnz_snapshot" ? "active" : ""} onClick={useRbnzSnapshot}>
+              Use RBNZ snapshot
+            </button>
+            <small>{v.sourceNote}</small>
           </div>
           <h3>Market & programme</h3>
           <Slider label="Mortgage market" value={v.marketBn} min={200} max={600} step={10} suffix="bn" onChange={set("marketBn")} />
@@ -138,6 +146,14 @@ export default function Home() {
               <span>Premiums collected</span>
               <strong>${fmt(result.totalPremium)}m</strong>
               <small>before programme costs</small>
+            </article>
+            <article>
+              <span>RBNZ snapshot</span>
+              <strong>{rbnzSnapshot.mortgage_book_anchor.date}</strong>
+              <small>
+                C35 ${fmt(rbnzSnapshot.mortgage_book_anchor.value_nzd_m)}m · B30 2y{" "}
+                {fmt(rbnzSnapshot.mortgage_rate_snapshot.two_year, 2)}%
+              </small>
             </article>
           </div>
 

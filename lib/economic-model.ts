@@ -1,9 +1,11 @@
 // Runtime formulas live in economic-model-core.mjs so the browser and Node
 // parity tests import the same implementation without a TypeScript runner.
 // @ts-expect-error TypeScript has no declaration file for the local MJS module.
-import { calculateStress, initial } from "./economic-model-core.mjs";
+import { applySnapshotToInputs, calculateStress, initial, rbnzSnapshot } from "./economic-model-core.mjs";
 
 export type Inputs = {
+  sourceMode: string;
+  sourceNote: string;
   scenarioName: string;
   designName: string;
   marketBn: number;
@@ -26,5 +28,4 @@ export type Inputs = {
   reinsuranceSharePct: number;
 };
 
-export { calculateStress, initial };
-
+export { applySnapshotToInputs, calculateStress, initial, rbnzSnapshot };
