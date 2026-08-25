@@ -269,10 +269,12 @@ def run_stress(assumptions: dict[str, Any], scenario_name: str, design_name: str
         pre_facility_reserve = reserve + premiums + investment_income - net_claims - operating_cost - crown_interest
         crown_draw = max(0.0, -pre_facility_reserve)
         reserve = max(0.0, pre_facility_reserve)
-        crown_debt += crown_interest + crown_draw
+        crown_debt += crown_draw
 
         surplus_repayment_share = float(_require(funding, "surplus_repayment_share"))
-        crown_repayment = min(crown_debt, reserve * surplus_repayment_share)
+        required_capital = insured_exposure * float(_require(funding, "required_capital_rate"))
+        repayment_surplus = max(reserve - required_capital, 0.0)
+        crown_repayment = min(crown_debt, repayment_surplus * surplus_repayment_share)
         if crown_repayment:
             reserve -= crown_repayment
             crown_debt -= crown_repayment
@@ -370,4 +372,3 @@ def _baseline_policy(
         reserve_after_10y_nzd=0.0,
         warnings=warnings,
     )
-

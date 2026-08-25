@@ -55,6 +55,25 @@ class ModelV02Tests(unittest.TestCase):
         result = run_stress(self.assumptions, "crisis", "zero_start_tiered")
         self.assertIn("zero_start_is_crown_contingent_liability_until_reserve_builds", result.warnings)
 
+    def test_crown_interest_is_cash_paid_not_double_counted_into_debt(self):
+        result = run_stress(self.assumptions, "crisis", "zero_start_tiered")
+        year_with_opening_debt = next(year for year in result.insurer_years if year.crown_debt_opening_nzd > 0)
+        expected_closing = (
+            year_with_opening_debt.crown_debt_opening_nzd
+            + year_with_opening_debt.crown_draw_nzd
+            - year_with_opening_debt.crown_repayment_nzd
+        )
+        self.assertAlmostEqual(year_with_opening_debt.crown_debt_closing_nzd, expected_closing)
+
+    def test_crown_repayment_only_uses_surplus_above_required_capital(self):
+        result = run_stress(self.assumptions, "crisis", "zero_start_tiered")
+        funding = self.assumptions["designs"]["zero_start_tiered"]["insurer_funding"]
+        required_capital_rate = funding["required_capital_rate"]
+        repayment_share = funding["surplus_repayment_share"]
+        for year in result.insurer_years:
+            surplus = max(year.closing_reserve_nzd + year.crown_repayment_nzd - year.insured_exposure_nzd * required_capital_rate, 0)
+            self.assertLessEqual(year.crown_repayment_nzd, surplus * repayment_share + 0.01)
+
     def test_crisis_is_worse_than_base_for_same_design(self):
         base = run_stress(self.assumptions, "base", "crown_seed_tiered")
         crisis = run_stress(self.assumptions, "crisis", "crown_seed_tiered")
@@ -67,4 +86,3 @@ class ModelV02Tests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

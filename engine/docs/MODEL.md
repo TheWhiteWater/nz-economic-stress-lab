@@ -56,3 +56,13 @@ vs national mortgage insurance with reserve and reinsurance
 
 If higher bank capital gives the same resilience more cheaply and with less fiscal tail risk, the national insurance proposal fails.
 
+## 4. Cross-language parity
+
+Python remains the canonical research engine. The browser model may exist only as a runtime implementation of the same contract.
+
+Rules:
+
+- shared constants live in `engine/data/assumptions.v0.json`;
+- Python generates golden fixtures in `engine/fixtures/golden.v0.json`;
+- browser/runtime code must match those fixtures in `tests/model-parity.test.mjs`;
+- new features should not be added until parity passes for the affected scenarios.

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/nz-economic-stress-lab/assumptions.schema.json",
+  "title": "NZ Economic Stress Lab assumptions",
+  "type": "object",
+  "required": [
+    "schema",
+    "years",
+    "mortgage_book_nzd",
+    "base_default_rate",
+    "unemployment_sensitivity",
+    "rate_sensitivity",
+    "lvr_buckets",
+    "scenarios",
+    "designs",
+    "baselines"
+  ],
+  "properties": {
+    "schema": { "type": "string" },
+    "years": { "type": "integer", "minimum": 1 },
+    "mortgage_book_nzd": { "type": "number", "minimum": 0 },
+    "base_default_rate": { "type": "number", "minimum": 0, "maximum": 1 },
+    "unemployment_sensitivity": { "type": "number" },
+    "rate_sensitivity": { "type": "number" },
+    "lvr_buckets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "label", "starting_lvr", "exposure_share", "risk_multiplier"]
+      }
+    },
+    "scenarios": { "type": "object" },
+    "designs": { "type": "object" },
+    "baselines": { "type": "object" }
+  }
+}
+

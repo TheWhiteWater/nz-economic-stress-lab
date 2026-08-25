@@ -93,23 +93,28 @@ export default function Home() {
             <button onClick={() => setV(initial)}>Reset</button>
           </div>
           <h3>Market & programme</h3>
-          <Slider label="Mortgage market" value={v.market} min={200} max={600} step={10} suffix="bn" onChange={set("market")} />
-          <Slider label="Annual migration" value={v.migration} min={2} max={25} step={1} suffix="%" onChange={set("migration")} />
-          <Slider label="Average premium" value={v.premium} min={0.05} max={0.6} step={0.0025} suffix="%" onChange={set("premium")} />
-          <Slider label="Initial reserve" value={v.initialCapital} min={0} max={2000} step={50} suffix="m" onChange={set("initialCapital")} />
+          <Slider label="Mortgage market" value={v.marketBn} min={200} max={600} step={10} suffix="bn" onChange={set("marketBn")} />
+          <Slider label="Annual migration" value={v.migrationPct} min={2} max={25} step={1} suffix="%" onChange={set("migrationPct")} />
+          <Slider label="Premium multiplier" value={v.premiumMultiplier} min={0.25} max={3} step={0.05} suffix="×" onChange={set("premiumMultiplier")} />
+          <Slider label="Initial reserve" value={v.initialReserveM} min={0} max={6000} step={100} suffix="m" onChange={set("initialReserveM")} />
 
           <h3>Insurer balance</h3>
-          <Slider label="Normal collateral loss" value={v.normalLoss} min={0} max={0.2} step={0.005} suffix="%" onChange={set("normalLoss")} />
-          <Slider label="Reinsurance premium" value={v.reinsuranceCost} min={0} max={0.2} step={0.005} suffix="%" onChange={set("reinsuranceCost")} />
-          <Slider label="Annual operating cost" value={v.operatingCost} min={0} max={50} step={1} suffix="m" onChange={set("operatingCost")} />
-          <Slider label="Reserve yield" value={v.investmentYield} min={0} max={7} step={0.25} suffix="%" onChange={set("investmentYield")} />
+          <Slider label="Annual operating cost" value={v.operatingCostM} min={0} max={50} step={1} suffix="m" onChange={set("operatingCostM")} />
+          <Slider label="Reserve yield" value={v.reserveYieldPct} min={0} max={7} step={0.25} suffix="%" onChange={set("reserveYieldPct")} />
+          <Slider label="Crown interest" value={v.crownInterestPct} min={0} max={10} step={0.25} suffix="%" onChange={set("crownInterestPct")} />
+          <Slider label="Required capital floor" value={v.requiredCapitalPct} min={0} max={2} step={0.05} suffix="%" onChange={set("requiredCapitalPct")} />
+          <Slider label="Reinsurance attachment" value={v.reinsuranceAttachmentM} min={0} max={4000} step={100} suffix="m" onChange={set("reinsuranceAttachmentM")} />
+          <Slider label="Reinsurance limit" value={v.reinsuranceLimitM} min={0} max={8000} step={100} suffix="m" onChange={set("reinsuranceLimitM")} />
+          <Slider label="Aggregate reinsured share" value={v.reinsuranceSharePct} min={0} max={80} step={5} suffix="%" onChange={set("reinsuranceSharePct")} />
 
           <h3>Crisis</h3>
           <Slider label="Crisis starts" value={v.crisisYear} min={1} max={10} step={1} suffix=" yr" onChange={set("crisisYear")} />
           <Slider label="Crisis duration" value={v.crisisYears} min={1} max={3} step={1} suffix=" yr" onChange={set("crisisYears")} />
-          <Slider label="Crisis collateral loss" value={v.crisisLoss} min={0.5} max={8} step={0.25} suffix="%" onChange={set("crisisLoss")} />
-          <Slider label="Bank first-loss" value={v.bankFirstLoss} min={0} max={60} step={5} suffix="%" onChange={set("bankFirstLoss")} />
-          <Slider label="Aggregate reinsured share" value={v.reinsuranceShare} min={0} max={80} step={5} suffix="%" onChange={set("reinsuranceShare")} />
+          <Slider label="House-price fall" value={v.housePriceFallPct} min={0} max={55} step={1} suffix="%" onChange={set("housePriceFallPct")} />
+          <Slider label="Unemployment shock" value={v.unemploymentShockPp} min={0} max={12} step={0.5} suffix="pp" onChange={set("unemploymentShockPp")} />
+          <Slider label="Mortgage-rate shock" value={v.mortgageRateShockPp} min={0} max={6} step={0.25} suffix="pp" onChange={set("mortgageRateShockPp")} />
+          <Slider label="Forced-sale haircut" value={v.forcedSaleHaircutPct} min={0} max={25} step={1} suffix="%" onChange={set("forcedSaleHaircutPct")} />
+          <Slider label="Bank first-loss attachment" value={v.bankFirstLossPct} min={0} max={15} step={0.5} suffix="%" onChange={set("bankFirstLossPct")} />
         </aside>
 
         <div className="results">
@@ -117,7 +122,7 @@ export default function Home() {
             <article>
               <span>Year 10 reserve</span>
               <strong>${fmt(result.reserve)}m</strong>
-              <small>{(result.reserve / (v.market * 1000) * 100).toFixed(2)}% of market</small>
+              <small>{(result.reserve / (v.marketBn * 1000) * 100).toFixed(2)}% of market</small>
             </article>
             <article className={result.crownDraw > 0 ? "warn" : "good"}>
               <span>Crown liquidity drawn</span>

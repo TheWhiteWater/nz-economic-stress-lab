@@ -70,6 +70,15 @@ Engine tests:
 npm run test:engine
 ```
 
+Cross-language parity test:
+
+```bash
+npm run fixtures:engine
+npm run test:parity
+```
+
+`engine/fixtures/golden.v0.json` is generated from the Python engine. The browser runtime model must match it before the site can be described as engine-aligned.
+
 ## Data sources planned
 
 - Reserve Bank of New Zealand statistical series
@@ -82,3 +91,4 @@ Working prototype.
 
 - Web interface: v0.1.
 - Python engine: v0.2 prototype with explicit loan-level and aggregate insurer waterfalls.
+- Browser runtime: engine-parity guarded by Python-generated golden fixtures.

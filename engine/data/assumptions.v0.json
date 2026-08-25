@@ -95,6 +95,7 @@
         "annual_operating_cost_nzd": 8000000,
         "reserve_yield_rate": 0.045,
         "crown_facility_interest_rate": 0.04,
+        "required_capital_rate": 0.005,
         "surplus_repayment_share": 0.35
       },
       "aggregate_reinsurance": {
@@ -117,6 +118,7 @@
         "annual_operating_cost_nzd": 8000000,
         "reserve_yield_rate": 0.045,
         "crown_facility_interest_rate": 0.04,
+        "required_capital_rate": 0.005,
         "surplus_repayment_share": 0.35
       },
       "aggregate_reinsurance": {
@@ -139,6 +141,7 @@
         "annual_operating_cost_nzd": 8000000,
         "reserve_yield_rate": 0.045,
         "crown_facility_interest_rate": 0.04,
+        "required_capital_rate": 0.005,
         "surplus_repayment_share": 0.35
       },
       "aggregate_reinsurance": {
@@ -165,4 +168,3 @@
     }
   }
 }
-
