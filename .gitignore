@@ -45,3 +45,4 @@ next-env.d.ts
 /engine/data/raw/
 /engine/data/processed/
 /engine/data/manifests/
+/engine/data/derived/

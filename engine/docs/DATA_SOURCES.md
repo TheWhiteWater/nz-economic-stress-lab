@@ -41,3 +41,32 @@ The first slice covers:
 - `B30` — new residential mortgage weighted average interest rates.
 
 The fetcher stores downloaded XLSX files and converted CSV sheets in ignored directories and writes an ingestion manifest with hashes and sheet counts. These files are operational data artifacts, not source code.
+
+## First derived snapshot
+
+Mapper:
+
+```text
+engine/scripts/derive_rbnz_model_inputs.py
+```
+
+Command:
+
+```bash
+npm run data:derive
+```
+
+Output:
+
+```text
+engine/data/derived/rbnz_model_inputs.json
+```
+
+Current derived fields:
+
+- `mortgage_book_anchor` from C35 total lending closing position;
+- `high_lvr_outstanding_anchor` from C35 higher-than-80% LVR closing position;
+- `new_lending_lvr_flow` from C30 new commitments;
+- `mortgage_rate_snapshot` from B30 rates.
+
+These are source-loaded candidates. They do not automatically overwrite calibrated assumptions yet.
