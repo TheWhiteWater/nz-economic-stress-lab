@@ -3,6 +3,7 @@ from __future__ import annotations
 import csv
 import hashlib
 import json
+import http.cookiejar
 import re
 import sys
 import urllib.request
@@ -24,6 +25,17 @@ NS = {
     "rel": "http://schemas.openxmlformats.org/package/2006/relationships",
 }
 
+BROWSER_HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+        "(KHTML, like Gecko) Chrome/126.0 Safari/537.36 "
+        "nz-economic-stress-lab/0.2"
+    ),
+    "Accept": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/octet-stream,*/*;q=0.8",
+    "Accept-Language": "en-NZ,en;q=0.9",
+    "Referer": "https://www.rbnz.govt.nz/statistics/series/data-file-index-page",
+}
+
 
 @dataclass(frozen=True)
 class Sheet:
@@ -40,15 +52,41 @@ def sha256_bytes(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
-def download(url: str) -> bytes:
+def build_opener() -> urllib.request.OpenerDirector:
+    cookie_jar = http.cookiejar.CookieJar()
+    return urllib.request.build_opener(
+        urllib.request.HTTPCookieProcessor(cookie_jar),
+        urllib.request.HTTPRedirectHandler(),
+    )
+
+
+def request_bytes(opener: urllib.request.OpenerDirector, url: str, accept: str | None = None) -> bytes:
+    headers = dict(BROWSER_HEADERS)
+    if accept is not None:
+        headers["Accept"] = accept
     request = urllib.request.Request(
         url,
-        headers={
-            "User-Agent": "nz-economic-stress-lab/0.2 research prototype",
-        },
+        headers=headers,
     )
-    with urllib.request.urlopen(request, timeout=60) as response:
+    with opener.open(request, timeout=60) as response:
         return response.read()
+
+
+def warm_session(opener: urllib.request.OpenerDirector, source_index_url: str) -> None:
+    try:
+        request_bytes(
+            opener,
+            source_index_url,
+            accept="text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        )
+    except Exception:
+        # Some environments allow direct workbook downloads but block HTML warmup.
+        # The real workbook request below records the actionable failure.
+        pass
+
+
+def download(opener: urllib.request.OpenerDirector, url: str) -> bytes:
+    return request_bytes(opener, url)
 
 
 def load_shared_strings(archive: zipfile.ZipFile) -> list[str]:
@@ -149,6 +187,8 @@ def main() -> int:
     RAW_DIR.mkdir(parents=True, exist_ok=True)
     PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
     MANIFEST_DIR.mkdir(parents=True, exist_ok=True)
+    opener = build_opener()
+    warm_session(opener, sources["source_index"]["url"])
 
     manifest = {
         "schema": "nz-economic-stress-lab.rbnz-ingestion-manifest.v0",
@@ -161,7 +201,7 @@ def main() -> int:
     for series in sources["series"]:
         code = series["code"]
         try:
-            payload = download(series["url"])
+            payload = download(opener, series["url"])
             raw_path = RAW_DIR / f"{code}.xlsx"
             raw_path.write_bytes(payload)
             manifest["series"].append(
@@ -192,4 +232,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
