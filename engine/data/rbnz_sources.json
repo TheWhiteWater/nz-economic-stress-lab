@@ -1,0 +1,47 @@
+{
+  "schema": "nz-economic-stress-lab.rbnz-sources.v0",
+  "source_index": {
+    "publisher": "Reserve Bank of New Zealand",
+    "title": "Statistical series data files page",
+    "url": "https://www.rbnz.govt.nz/statistics/series/data-file-index-page",
+    "verified": "2026-08-26"
+  },
+  "series": [
+    {
+      "code": "C35",
+      "title": "Residential mortgage loan reconciliation",
+      "url": "https://rbnz.govt.nz/-/media/project/sites/rbnz/files/statistics/series/c/c35/hc35.xlsx",
+      "model_use": "Mortgage stock and reconciliation anchor for programme scale.",
+      "status": "first_ingestion_slice"
+    },
+    {
+      "code": "C30",
+      "title": "New residential mortgage lending by loan-to-valuation ratio (LVR)",
+      "url": "https://rbnz.govt.nz/-/media/project/sites/rbnz/files/statistics/series/c/c30/hc30.xlsx",
+      "model_use": "New-flow LVR distribution signal. Must not be treated as outstanding-book LVR distribution without transformation.",
+      "status": "first_ingestion_slice"
+    },
+    {
+      "code": "B20",
+      "title": "New residential mortgage standard interest rates",
+      "url": "https://rbnz.govt.nz/-/media/project/sites/rbnz/files/statistics/series/b/b20/hb20.xlsx",
+      "model_use": "Mortgage-rate scenario calibration candidate.",
+      "status": "first_ingestion_slice"
+    },
+    {
+      "code": "B21",
+      "title": "New residential mortgage special interest rates",
+      "url": "https://rbnz.govt.nz/-/media/project/sites/rbnz/files/statistics/series/b/b21/hb21.xlsx",
+      "model_use": "Mortgage-rate scenario calibration candidate.",
+      "status": "first_ingestion_slice"
+    },
+    {
+      "code": "B30",
+      "title": "New residential mortgage weighted average interest rates",
+      "url": "https://www.rbnz.govt.nz/-/media/project/sites/rbnz/files/statistics/series/b/b30/hb30.xlsx",
+      "model_use": "Weighted mortgage-rate scenario calibration candidate.",
+      "status": "first_ingestion_slice"
+    }
+  ]
+}
+

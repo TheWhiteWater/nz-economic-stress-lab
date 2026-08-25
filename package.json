@@ -13,6 +13,7 @@
     "test": "npm run build && node --test tests/rendered-html.test.mjs",
     "test:engine": "cd engine && PYTHONPATH=. python3 -m unittest discover -s tests",
     "fixtures:engine": "cd engine && PYTHONPATH=. python3 scripts/generate_golden_fixtures.py",
+    "data:rbnz": "cd engine && PYTHONPATH=. python3 scripts/fetch_rbnz_sources.py",
     "test:parity": "node --test tests/model-parity.test.mjs",
     "lint": "bash scripts/sites-env.sh -- eslint . --ignore-pattern dist --ignore-pattern .next",
     "db:generate": "bash scripts/sites-env.sh -- drizzle-kit generate"

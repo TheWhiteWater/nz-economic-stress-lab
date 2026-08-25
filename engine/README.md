@@ -16,4 +16,19 @@ cd engine
 PYTHONPATH=. python3 scripts/generate_golden_fixtures.py
 ```
 
+Fetch the first RBNZ source slice:
+
+```bash
+cd engine
+PYTHONPATH=. python3 scripts/fetch_rbnz_sources.py
+```
+
+The downloader writes raw files, normalized CSV sheets and a manifest under ignored paths:
+
+```text
+engine/data/raw/
+engine/data/processed/
+engine/data/manifests/
+```
+
 Current status: v0.2 prototype. The mechanics are explicit and tested, but assumptions are placeholders until calibrated against official data.
